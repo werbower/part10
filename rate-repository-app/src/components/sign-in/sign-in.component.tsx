@@ -6,6 +6,11 @@ import {Controller, useForm, } from 'react-hook-form'
 import  * as z from 'zod'
 import { theme } from "../../theme"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { getRepositories, mutAuth } from "../../apollo/queries"
+import { useApolloClient, useMutation } from "@apollo/client/react"
+import { authStorage } from "../../services/storage.service"
+import { useNavigate } from "react-router-native"
+
 
 
 
@@ -47,23 +52,41 @@ const style = StyleSheet.create({
 })
 
 export const SignIn = ()=> {
+  const navigate = useNavigate()
+  const client = useApolloClient()
+  const [auth, { data, loading: loadingAuth}] = useMutation(mutAuth, {
+    refetchQueries: [getRepositories]
+  })
   const { trigger,
     handleSubmit, control, getValues, formState: {errors}}= useForm<FormData>({
     defaultValues: defaultData,
     resolver: zodResolver(zodSchema)
   })
+
+  if (loadingAuth) 
+    return <Text>submitting...</Text>
+    
+  if (data){
+    const dataVal = data as {authenticate: {accessToken: string}}
+    console.log('auth result ', dataVal)
+    authStorage.setAccessToken(dataVal.authenticate.accessToken)
+    client.resetStore()
+    navigate('/')
+  }
   
 
   const onSubmit =()=> {
     trigger()
     
-    handleSubmit((data: FormData)=> {
-      console.log('submit data ', data)
-    },()=> {
-      console.log('error submit data', getValues())
-      console.log('errors ', errors)
-    })()
-  } 
+    handleSubmit(
+      (data: FormData)=> {
+        console.log('submit data ', data)
+        auth({variables: {credentials: {...data}}, awaitRefetchQueries: true})
+      },()=> {
+        console.log('error submit data', getValues())
+        console.log('errors ', errors)
+      })()
+  }
 
   const inputErrStyle = StyleSheet.create({
     textInput: {
@@ -71,9 +94,7 @@ export const SignIn = ()=> {
       borderColor: 'red'
     }
   })
-
-
-
+  
   return(<View style={style.form}>
 
     

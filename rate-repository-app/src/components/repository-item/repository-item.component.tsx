@@ -16,8 +16,9 @@ export const RepositoryItem = ({item}: RepositoryItemProps)=> {
     itemTextBlock: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'flex-start',
-      rowGap: 6
+      rowGap: 6,
+      paddingRight: 16,
+      flex: 1,
     },
 
     itemName: {
@@ -51,12 +52,15 @@ export const RepositoryItem = ({item}: RepositoryItemProps)=> {
         />
         <View style={style.itemTextBlock}>
           <Text style={style.itemName}>{item.fullName}</Text>
-          <Text style={{color: 'grey'}}>{item.description}</Text>
+          <Text style={{color: 'grey', display: 'flex', flexDirection: 'row',
+            maxWidth: '100%', minWidth: '100%'
+          }}><Text style={{flex: 1, width: 0}}>{item.description}</Text></Text>
           <Text style={{
             backgroundColor: '#0366d6', 
             color: 'white', 
             padding: 3,
-            borderRadius: 3
+            borderRadius: 3,
+            alignSelf: 'flex-start'
           }}
           >{item.language}</Text>
         </View>

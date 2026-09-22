@@ -33,11 +33,14 @@ const styles = StyleSheet.create({
   app: {
     display: 'flex',
     flexDirection: 'column',
-    minWidth: 400
+    minWidth: 400,
+    maxWidth: '100%'
 
   },
   container: {
-    paddingLeft: 16,
+    
+    
     backgroundColor: '#fff',
+
   },
 })

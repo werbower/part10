@@ -13,6 +13,7 @@ module.exports = defineConfig([
     ignores: ["dist/*"],
     extends: [js.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylistic],
     rules: {
+      '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/no-require-imports': 'off',
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/indent': ['error', 2]

@@ -1,0 +1,5 @@
+allowBuilds:
+  '@apollo/protobufjs': true
+  bcrypt: true
+  husky: true
+  sqlite3: true
