@@ -4,6 +4,7 @@ import { RepositoryList } from './components/repository-list/repository-list.com
 import { AppBar } from './components/app-bar/app-bar.component'
 import { Navigate, Route, Routes } from 'react-router-native'
 import { SignIn } from './components/sign-in/sign-in.component'
+import { RepositoryDetails } from './components/repository-details/repository-details.component'
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
             <RepositoryList />
           </View>
         } />
+        <Route path='/details/:repositoryId' element={<RepositoryDetails />}/>
         <Route path='/sign-in' element={<SignIn />}/>
         <Route path='*' element={<Navigate to='/' replace/>}/>
 

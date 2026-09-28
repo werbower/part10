@@ -1,11 +1,12 @@
-import { Image, StyleSheet,  View } from "react-native"
+import { GestureResponderEvent, Image, Pressable, StyleSheet,  View } from "react-native"
 import { StyledText  as Text} from "../styled-text/styled-text.component"
 
-import { repositories } from "../repository-list/repository-list.data"
+import { RepositoryData } from "../repository-list/repository-list.data"
+import * as Linking from 'expo-linking'
 
-interface RepositoryItemProps {item: typeof repositories[number]}
+interface RepositoryItemProps {item: RepositoryData&{url?: string}, showButton?: boolean}
 
-export const RepositoryItem = ({item}: RepositoryItemProps)=> {
+export const RepositoryItem = ({item, showButton}: RepositoryItemProps)=> {
   const style = StyleSheet.create({
     itemHead: {
       padding: 8,
@@ -39,9 +40,27 @@ export const RepositoryItem = ({item}: RepositoryItemProps)=> {
     },
     greyText: {
       color: 'grey'
+    },
+    button: {
+      backgroundColor: '#0366d6', 
+      color: 'white', 
+      padding: 3,
+      borderRadius: 3,
     }
 
   })
+
+  const handleUrlPress = (e: GestureResponderEvent)=> {
+    e.stopPropagation()
+    console.log('url ', item.url)
+
+    if (item.url){
+      
+      Linking.openURL(item.url)
+    }
+      
+
+  }
 
 
   return (<>
@@ -55,13 +74,7 @@ export const RepositoryItem = ({item}: RepositoryItemProps)=> {
           <Text style={{color: 'grey', display: 'flex', flexDirection: 'row',
             maxWidth: '100%', minWidth: '100%'
           }}><Text style={{flex: 1, width: 0}}>{item.description}</Text></Text>
-          <Text style={{
-            backgroundColor: '#0366d6', 
-            color: 'white', 
-            padding: 3,
-            borderRadius: 3,
-            alignSelf: 'flex-start'
-          }}
+          <Text style={[style.button, {alignSelf: 'flex-start'}]}
           >{item.language}</Text>
         </View>
       </View>
@@ -79,10 +92,13 @@ export const RepositoryItem = ({item}: RepositoryItemProps)=> {
           <Text style={[style.statusColumn, style.greyText]}>Rating: </Text>
         </View>
       </View>
-      
 
-
-      
+      {!!showButton &&
+      <Pressable 
+        onPress={(e)=> handleUrlPress(e)}
+        style={[style.button, { marginTop: 16, marginLeft: 16, marginRight: 16}]}>
+        <Text style={{color: 'white', textAlign: 'center'}}>Open in GitHub</Text>
+      </Pressable>}
       
       
     </View>
