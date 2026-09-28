@@ -30,3 +30,5 @@ export const createApolloClient = ()=> {
   })
 }
 
+export const apolloClient = createApolloClient()
+

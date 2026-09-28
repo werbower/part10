@@ -45,7 +45,7 @@ export const RepositoryItem = ({item}: RepositoryItemProps)=> {
 
 
   return (<>
-    <View>
+    <View testID="RepositoryItem">
       <View style={style.itemHead}>
         <Image style={style.avatar}
           source={{uri: item.ownerAvatarUrl}}

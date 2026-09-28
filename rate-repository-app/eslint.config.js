@@ -1,9 +1,9 @@
 // https://docs.expo.dev/guides/using-eslint/
- const { defineConfig } = require('eslint/config')
- const expoConfig = require("eslint-config-expo/flat")
- const js = require("@eslint/js")
- const tseslint = require("typescript-eslint")
- const stylistic = require("@stylistic/eslint-plugin")
+const { defineConfig } = require('eslint/config')
+const expoConfig = require("eslint-config-expo/flat")
+const js = require("@eslint/js")
+const tseslint = require("typescript-eslint")
+const stylistic = require("@stylistic/eslint-plugin")
  
 module.exports = defineConfig([
   expoConfig,
@@ -15,6 +15,9 @@ module.exports = defineConfig([
     rules: {
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
+      
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/indent': ['error', 2]
     }
