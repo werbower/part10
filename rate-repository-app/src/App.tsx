@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     minWidth: 400,
-    maxWidth: '100%'
+    maxWidth: 600
 
   },
   container: {

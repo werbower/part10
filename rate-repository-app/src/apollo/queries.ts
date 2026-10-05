@@ -25,10 +25,8 @@ query getRepo($repositoryId: ID!) {
     id
     ownerName
     name
-    
     createdAt
     fullName
-    
     ratingAverage
     reviewCount
     stargazersCount
@@ -40,6 +38,21 @@ query getRepo($repositoryId: ID!) {
     description
     language
     userHasReviewed
+    reviews {
+      edges {
+        node {
+          id
+          rating
+          text
+          createdAt
+          userId
+          user {
+            id
+            username
+          }
+        }
+      }
+    }
   }
 }`
 

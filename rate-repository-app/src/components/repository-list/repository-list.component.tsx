@@ -41,7 +41,9 @@ export const RepositoryList = () => {
     <FlatList
       style={{margin: 10}}
       data={repoData}
-      renderItem={({item})=>  <Pressable onPress={()=> handleItemPress(item)}><RepositoryItem {...{item}} /></Pressable>}
+      renderItem={({item})=> <Pressable 
+        onPress={()=> handleItemPress(item)}><RepositoryItem {...{item}} />
+      </Pressable>}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={item => item.id}
       // other props

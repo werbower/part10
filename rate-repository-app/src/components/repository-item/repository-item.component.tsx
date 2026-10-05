@@ -4,7 +4,9 @@ import { StyledText  as Text} from "../styled-text/styled-text.component"
 import { RepositoryData } from "../repository-list/repository-list.data"
 import * as Linking from 'expo-linking'
 
-interface RepositoryItemProps {item: RepositoryData&{url?: string}, showButton?: boolean}
+
+interface RepositoryItemProps {item: RepositoryData&{url?: string}, 
+  showButton?: boolean }
 
 export const RepositoryItem = ({item, showButton}: RepositoryItemProps)=> {
   const style = StyleSheet.create({
@@ -52,16 +54,10 @@ export const RepositoryItem = ({item, showButton}: RepositoryItemProps)=> {
 
   const handleUrlPress = (e: GestureResponderEvent)=> {
     e.stopPropagation()
-    console.log('url ', item.url)
-
     if (item.url){
-      
       Linking.openURL(item.url)
     }
-      
-
   }
-
 
   return (<>
     <View testID="RepositoryItem">
@@ -99,8 +95,6 @@ export const RepositoryItem = ({item, showButton}: RepositoryItemProps)=> {
         style={[style.button, { marginTop: 16, marginLeft: 16, marginRight: 16}]}>
         <Text style={{color: 'white', textAlign: 'center'}}>Open in GitHub</Text>
       </Pressable>}
-      
-      
     </View>
   </>)
 }
