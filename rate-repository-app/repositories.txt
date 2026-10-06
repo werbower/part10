@@ -1,0 +1,118 @@
+{
+  "data": {
+    "repositories": {
+      "edges": [
+        {
+          "node": {
+            "fullName": "jaredpalmer/formik",
+            "id": "jaredpalmer.formik",
+            "language": "TypeScript",
+            "name": "formik",
+            "ownerName": "jaredpalmer",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/4060187?v=4",
+            "reviewCount": 5
+          }
+        },
+        {
+          "node": {
+            "fullName": "async-library/react-async",
+            "id": "async-library.react-async",
+            "language": "JavaScript",
+            "name": "react-async",
+            "ownerName": "async-library",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/54310907?v=4",
+            "reviewCount": 3
+          }
+        },
+        {
+          "node": {
+            "fullName": "rzwitserloot/lombok",
+            "id": "rzwitserloot.lombok",
+            "language": "Java",
+            "name": "lombok",
+            "ownerName": "rzwitserloot",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/45949248?v=4",
+            "reviewCount": 0
+          }
+        },
+        {
+          "node": {
+            "fullName": "rails/rails",
+            "id": "rails.rails",
+            "language": "Ruby",
+            "name": "rails",
+            "ownerName": "rails",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/4223?v=4",
+            "reviewCount": 2
+          }
+        },
+        {
+          "node": {
+            "fullName": "django/django",
+            "id": "django.django",
+            "language": "Python",
+            "name": "django",
+            "ownerName": "django",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/27804?v=4",
+            "reviewCount": 2
+          }
+        },
+        {
+          "node": {
+            "fullName": "apollographql/apollo-client",
+            "id": "apollographql.apollo-client",
+            "language": "TypeScript",
+            "name": "apollo-client",
+            "ownerName": "apollographql",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/17189275?v=4",
+            "reviewCount": 0
+          }
+        },
+        {
+          "node": {
+            "fullName": "reduxjs/redux",
+            "id": "reduxjs.redux",
+            "language": "TypeScript",
+            "name": "redux",
+            "ownerName": "reduxjs",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/13142323?v=4",
+            "reviewCount": 0
+          }
+        },
+        {
+          "node": {
+            "fullName": "spring-projects/spring-framework",
+            "id": "spring-projects.spring-framework",
+            "language": "Java",
+            "name": "spring-framework",
+            "ownerName": "spring-projects",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/317776?v=4",
+            "reviewCount": 0
+          }
+        },
+        {
+          "node": {
+            "fullName": "zeit/next.js",
+            "id": "zeit.next.js",
+            "language": "JavaScript",
+            "name": "next.js",
+            "ownerName": "zeit",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/14985020?v=4",
+            "reviewCount": 0
+          }
+        },
+        {
+          "node": {
+            "fullName": "zeit/swr",
+            "id": "zeit.swr",
+            "language": "TypeScript",
+            "name": "swr",
+            "ownerName": "zeit",
+            "ownerAvatarUrl": "https://avatars.githubusercontent.com/u/14985020?v=4",
+            "reviewCount": 0
+          }
+        }
+      ]
+    }
+  }
+}

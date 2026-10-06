@@ -10,10 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-native"
 import { signIn } from "../../services/app.service"
 
-
-
-
-
 interface FormData {
   username: string,
   password: string
@@ -82,8 +78,6 @@ export const SignIn = ()=> {
   })
   
   return(<View style={style.form}>
-
-    
     <View>
       <Controller 
         control={control}

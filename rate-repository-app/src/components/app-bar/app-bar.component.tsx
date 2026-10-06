@@ -51,12 +51,16 @@ export const AppBar = ()=> {
           <Text style={styles.buttonText}>Sign in</Text>
         </Link>
       </Pressable>}
+      
+      {!!dataVal?.me && <Pressable style={styles.button}>
+        <Link to='/create-review'>
+          <Text style={styles.buttonText}>Create a review</Text>
+        </Link>
+      </Pressable>}
       {!!dataVal?.me && <Pressable style={styles.button}
         onPress={handleSignOut}>
         <Text style={styles.buttonText}>Sign out</Text>
-        
       </Pressable>}
-      
 
     </ScrollView>
     

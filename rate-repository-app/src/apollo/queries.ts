@@ -75,3 +75,51 @@ mutation mutAuth($credentials: AuthenticateInput) {
     }
   }
 }`
+
+export const mutCreateReview = gql`
+mutation CreateReview($review: CreateReviewInput) {
+  createReview(review: $review) {
+    createdAt
+    id
+    rating
+    repository {
+      id
+      language
+      name
+      ownerName
+    }
+    repositoryId
+    text
+    user {
+      id
+      username
+    }
+    userId
+  }
+}`
+
+export interface CreatedReview {
+  createdAt: string
+  id: string
+  rating: number
+  repository: {
+    id: string
+    language: string
+    name: string
+    ownerName: string
+  }
+  repositoryId: string
+  text: string
+  user: {
+    id: string
+    username: string
+  }
+  userId: string
+}
+
+export interface ReviewCreateArgs {
+  ownerName: string,
+  rating: number,
+  repositoryName: string,
+  text?: string
+}
