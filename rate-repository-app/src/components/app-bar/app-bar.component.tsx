@@ -51,6 +51,11 @@ export const AppBar = ()=> {
           <Text style={styles.buttonText}>Sign in</Text>
         </Link>
       </Pressable>}
+      {!dataVal?.me && <Pressable style={styles.button}>
+        <Link to='/sign-up'>
+          <Text style={styles.buttonText}>Sign up</Text>
+        </Link>
+      </Pressable>}
       
       {!!dataVal?.me && <Pressable style={styles.button}>
         <Link to='/create-review'>

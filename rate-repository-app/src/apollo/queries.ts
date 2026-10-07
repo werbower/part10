@@ -123,3 +123,19 @@ export interface ReviewCreateArgs {
   repositoryName: string,
   text?: string
 }
+
+export const mutCreateUser = gql`
+mutation CreateUser($user: CreateUserInput) {
+  createUser(user: $user) {
+    id
+    username
+  }
+}`
+export interface CreateUserArgs {
+  password: string
+  username: string
+}
+export interface CreatedUser {
+  id: string
+  username: string
+}

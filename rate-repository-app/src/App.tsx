@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-native'
 import { SignIn } from './components/sign-in/sign-in.component'
 import { RepositoryDetails } from './components/repository-details/repository-details.component'
 import { CreateReview } from './components/create-review/create-review.component'
+import { SignUp } from './components/sign-up/sign-up.component'
 
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path='/details/:repositoryId' element={<RepositoryDetails />}/>
         <Route path='/sign-in' element={<SignIn />}/>
         <Route path='/create-review' element={<CreateReview />}/>
+        <Route path='/sign-up' element={<SignUp />}/>
         
         <Route path='*' element={<Navigate to='/' replace/>}/>
 
