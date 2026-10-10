@@ -11,7 +11,9 @@ module.exports = defineConfig([
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {'@stylistic': stylistic},
     ignores: ["dist/*"],
-    extends: [js.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylistic],
+    extends: [js.configs.recommended, 
+      tseslint.configs.recommended,
+      tseslint.configs.stylistic],
     rules: {
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/no-require-imports': 'off',

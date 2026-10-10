@@ -7,6 +7,7 @@ import { SignIn } from './components/sign-in/sign-in.component'
 import { RepositoryDetails } from './components/repository-details/repository-details.component'
 import { CreateReview } from './components/create-review/create-review.component'
 import { SignUp } from './components/sign-up/sign-up.component'
+import { RepositoryProvider } from './components/repository-provider/repository-provider.component'
 
 
 export default function App() {
@@ -17,7 +18,9 @@ export default function App() {
       <Routes>
         <Route path='/' element={
           <View style={styles.container}>
-            <RepositoryList />
+            <RepositoryProvider>
+              <RepositoryList/>
+            </RepositoryProvider>
           </View>
         } />
         <Route path='/details/:repositoryId' element={<RepositoryDetails />}/>

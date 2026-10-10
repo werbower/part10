@@ -18,15 +18,18 @@ const baseSchema = z.object({
   password: z.string('password is required').min(1, 'password is required'),
   passwordConfirm: z.string('password confirmation is required').min(1, 'password confirm name is required'),
 })
-const zodSchema = baseSchema.refine(val=> {return val.password === val.passwordConfirm},{
-  path: ['passwordConfirm'],
-  message: 'password and password confirm must be equal',
-  when(payload) {
-    return baseSchema
-      .pick({ password: true, passwordConfirm: true }) 
-      .safeParse(payload.value).success 
-  }   
-})
+
+const zodSchema = baseSchema
+// .refine(val=> {return val.password === val.passwordConfirm},{
+//   path: ['passwordConfirm'],
+//   message: 'password and password confirm must be equal',
+//   error: 'not equal',
+//   when(payload) {
+//     return baseSchema
+//       .pick({ password: true, passwordConfirm: true }) 
+//       .safeParse(payload.value).success 
+//   }   
+// })
 
 const defaultData = {username: '',  password: '',  passwordConfirm: ''}
 
