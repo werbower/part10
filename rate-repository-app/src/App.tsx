@@ -8,6 +8,7 @@ import { RepositoryDetails } from './components/repository-details/repository-de
 import { CreateReview } from './components/create-review/create-review.component'
 import { SignUp } from './components/sign-up/sign-up.component'
 import { RepositoryProvider } from './components/repository-provider/repository-provider.component'
+import { RepositoryFilter } from './components/repository-filter/repository-filter.component'
 
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Route path='/' element={
           <View style={styles.container}>
             <RepositoryProvider>
+              <RepositoryFilter/>
               <RepositoryList/>
             </RepositoryProvider>
           </View>

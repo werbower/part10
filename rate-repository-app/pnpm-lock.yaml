@@ -59,6 +59,9 @@ importers:
       react-router-native:
         specifier: ^6.30.6
         version: 6.30.6(react-native@0.86.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/jest-preset@0.86.3(@babel/core@7.29.7(supports-color@8.1.1))(react@19.2.3)(supports-color@8.1.1))(@types/react@19.2.18)(react@19.2.3)(supports-color@8.1.1))(react@19.2.3)
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
       zod:
         specifier: 4.6.5
         version: 4.6.5
