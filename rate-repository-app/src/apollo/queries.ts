@@ -59,10 +59,31 @@ query getRepo($repositoryId: ID!) {
 }`
 
 export const getMe = gql`
-query getMe {
+query getMe($includeReviews: Boolean = false) {
   me {
     id
     username
+
+    reviews @include(if: $includeReviews) {
+      edges {
+        node {
+          id
+          rating
+          repositoryId
+          repository {
+            id
+            name
+          }
+          text
+          createdAt
+          userId
+          user {
+            id
+            username
+          }
+        }
+      }
+    }
   }
 }`
 

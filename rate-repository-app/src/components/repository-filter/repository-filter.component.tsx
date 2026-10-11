@@ -20,15 +20,11 @@ export const RepositoryFilter = ()=> {
   const selectedOrderType = repoService.useStore(useShallow(x=> x.orderType))
   const selectedSearch = repoService.useStore(useShallow(x=> x.search))
   
-  console.log('rendering', selectedSearch)
-  
   const handleChangeOrderType = (newValue: OrderType)=> {
-    console.log('selected ', newValue)
     repoService.setOrderType(newValue)
   }
 
   const handleChangeSearch = (newVal: string)=> {
-    console.log('hangle search', newVal)
     repoService.setSearch(newVal)
   }
 

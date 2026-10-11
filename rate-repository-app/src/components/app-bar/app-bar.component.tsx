@@ -1,6 +1,6 @@
 import { StyleSheet, View ,  Pressable, Text, ScrollView} from "react-native"
 import Constants from 'expo-constants'
-import { Link } from "react-router-native"
+import { Link, useNavigate } from "react-router-native"
 import { getMe } from "../../apollo/queries"
 import { useApolloClient, useQuery } from "@apollo/client/react"
 import { authStorage } from "../../services/storage.service"
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 })
 
 export const AppBar = ()=> {
+  const navigate = useNavigate()
   const { data } = useQuery(getMe)
   const client = useApolloClient()
   const dataVal = data as {me: {username: string, id: string}}
@@ -35,7 +36,10 @@ export const AppBar = ()=> {
 
   const handleSignOut = async ()=> {
     await authStorage.removeAccessToken()
-    setTimeout(()=> client.resetStore())
+    setTimeout(()=> {
+      client.resetStore()
+      navigate('/')
+    })
   }
 
 
@@ -60,6 +64,11 @@ export const AppBar = ()=> {
       {!!dataVal?.me && <Pressable style={styles.button}>
         <Link to='/create-review'>
           <Text style={styles.buttonText}>Create a review</Text>
+        </Link>
+      </Pressable>}
+      {!!dataVal?.me && <Pressable style={styles.button}>
+        <Link to='/my-reviews'>
+          <Text style={styles.buttonText}>My reviews</Text>
         </Link>
       </Pressable>}
       {!!dataVal?.me && <Pressable style={styles.button}

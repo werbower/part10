@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-native'
 import { useContext, useEffect, useState } from 'react'
 import { RepositoryContext } from '../repository-provider/repository-provider.component'
 import { useShallow } from 'zustand/shallow'
-import {  finalize, from, Subject, switchMap, takeUntil, tap } from 'rxjs'
+import {   distinctUntilChanged, finalize, from, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs'
+import { FilterState } from '../repository-provider/repository-list.service'
 
 const styles = StyleSheet.create({
   separator: {
@@ -27,6 +28,10 @@ export const RepositoryList = () => {
   useEffect(()=> {
 
     repoService.filter$.pipe(
+      startWith({orderType: repoService.orderType$.value, 
+        search: repoService.search$.value} as FilterState),
+      distinctUntilChanged((p: FilterState,c: FilterState)=> 
+        p?.orderType === c?.orderType && p?.search === c?.search),
       switchMap(()=> {
         setLoading(true)
         return from(repoService.loadRepoData()).pipe(

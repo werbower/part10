@@ -9,6 +9,7 @@ import { CreateReview } from './components/create-review/create-review.component
 import { SignUp } from './components/sign-up/sign-up.component'
 import { RepositoryProvider } from './components/repository-provider/repository-provider.component'
 import { RepositoryFilter } from './components/repository-filter/repository-filter.component'
+import { MyReviews } from './components/my-reviews/my-reviews.component'
 
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path='/details/:repositoryId' element={<RepositoryDetails />}/>
         <Route path='/sign-in' element={<SignIn />}/>
         <Route path='/create-review' element={<CreateReview />}/>
+        <Route path='/my-reviews' element={<MyReviews />}/>
         <Route path='/sign-up' element={<SignUp />}/>
         
         <Route path='*' element={<Navigate to='/' replace/>}/>
