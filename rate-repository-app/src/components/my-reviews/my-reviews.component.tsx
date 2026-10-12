@@ -14,7 +14,7 @@ const mapReviews = (x: ReviewsData): Review[] => {
 }
 
 export const MyReviews = ()=> {
-  const { data, loading } = useQuery(getMe, {
+  const { data, loading, refetch } = useQuery(getMe, {
     variables: {includeReviews: true}
   })
   if (loading) return (<Text>loading...</Text>)
@@ -25,7 +25,8 @@ export const MyReviews = ()=> {
 
   return (<>
     {reviews.length>0 && <View>
-      <ReviewsList reviews={reviews} showUser={false} showRepo={true}/>
+      <ReviewsList reviews={reviews} showUser={false} showRepo={true}
+        showActions={true}  refetchFn={refetch}/>
     </View>}
   </>)
 }

@@ -6,6 +6,7 @@ export const theme = {
     textSecondary: '#586069',
     primary: '#0366d6',
     error: 'red',
+    alarm: 'rgb(200, 100, 100)'
   },
   fontSizes: {
     body: 14,

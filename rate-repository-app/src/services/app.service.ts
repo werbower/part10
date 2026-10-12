@@ -1,5 +1,5 @@
 import { apolloClient } from "../apollo/apollo.service"
-import { CreatedReview, CreatedUser, CreateUserArgs, getRepositories, mutAuth, mutCreateReview, mutCreateUser, ReviewCreateArgs } from "../apollo/queries"
+import { CreatedReview, CreatedUser, CreateUserArgs, getRepo, getRepositories, mutAuth, mutCreateReview, mutCreateUser, mutDeleteReview, ReviewCreateArgs } from "../apollo/queries"
 import { authStorage } from "./storage.service"
 
 export interface SignInData {
@@ -26,8 +26,7 @@ export const createReview = async (data: ReviewCreateArgs)=> {
   
   const results  = await apolloClient.mutate({mutation: mutCreateReview,
     variables: {review: {...data}},
-    awaitRefetchQueries: true,
-    refetchQueries: [getRepositories]
+    awaitRefetchQueries: true    
   })
   console.log('results ', results)
   apolloClient.resetStore()
@@ -40,11 +39,20 @@ export const signUp = async (data: CreateUserArgs)=> {
   
   const results  = await apolloClient.mutate({mutation: mutCreateUser,
     variables: {user: {...data}},
-    awaitRefetchQueries: true,
-    refetchQueries: [getRepositories]
+    awaitRefetchQueries: true
   })
   console.log('results create user', results)
   apolloClient.resetStore()
   return results as any as {data: { createUser: CreatedUser}}
   
+}
+
+export const deleteReview = async (id: string)=> {
+  const result = await apolloClient.mutate({
+    mutation: mutDeleteReview,
+    variables: {deleteReviewId: id}
+  })
+  console.log('result of delete review', result)
+  apolloClient.resetStore()
+  return result as any
 }

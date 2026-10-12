@@ -162,3 +162,8 @@ export interface CreatedUser {
   id: string
   username: string
 }
+
+export const mutDeleteReview = gql`
+mutation DeleteReview($deleteReviewId: ID!) {
+  deleteReview(id: $deleteReviewId)
+}`
