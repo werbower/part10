@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     minWidth: 400,
-    maxWidth: 600
+    maxWidth: 600,
+    height: '100%'
 
   },
   container: {
-    
-    
+    flex: 1,
     backgroundColor: '#fff',
 
   },

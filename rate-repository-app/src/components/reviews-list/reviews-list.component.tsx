@@ -64,10 +64,11 @@ const styles = StyleSheet.create({
 
 interface ReviewsListParams {reviews: Review[],
   showUser?: boolean, showRepo?: boolean, 
-  showActions?: boolean, refetchFn?: RefetchFunction<any, any, any>}
+  showActions?: boolean, refetchFn?: RefetchFunction<any, any, any>,
+  loadMoreFn?: ()=> void}
 
 export const ReviewsList = ({reviews, showUser=true, showRepo=false,
-  showActions = false, refetchFn
+  showActions = false, refetchFn= undefined, loadMoreFn=undefined
 }: ReviewsListParams)=> {
   const navigate = useNavigate()
 
@@ -102,9 +103,16 @@ export const ReviewsList = ({reviews, showUser=true, showRepo=false,
         {text: 'Delete', onPress: onConfirm},
       ])
   }
+
+  const handleOnEnd = ()=> {
+    if(loadMoreFn)
+      loadMoreFn()
+  }
   
   return(<FlatList 
     
+    onEndReached={handleOnEnd}
+    onEndReachedThreshold={0.5}
     data={reviews}
     renderItem={({item})=> <>
       <View style={styles.container}>

@@ -16,13 +16,25 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />
 
+export interface PageData {totalCount: number, pageInfo: {endCursor: string, hasNextPage: boolean}}
+interface RepositoryDataLoad {repositories: {edges?: Array<{node: RepositoryData}>}&PageData }
+
+
+
+const mapFn = (data : RepositoryDataLoad)=> {
+  return data.repositories?.edges?.map(x=> x.node) as RepositoryData[]
+}
+const pageSize = 4
+
 
 export const RepositoryList = () => {
   const [destroyed$] = useState(new Subject<void>())
   const repoService = useContext(RepositoryContext)
   const [loading, setLoading] = useState(false)
+  const [pageLoading, setPageLoading] = useState(false)
   
-  const repoData = repoService.useStore(useShallow(x=> x.repoData))
+  const fullData = repoService.useStore(useShallow(x=> ({
+    repoData: x.repoData, hasNextPage: x.hasNextPage})))
   const navigate = useNavigate()
 
   useEffect(()=> {
@@ -34,17 +46,17 @@ export const RepositoryList = () => {
         p?.orderType === c?.orderType && p?.search === c?.search),
       switchMap(()=> {
         setLoading(true)
-        return from(repoService.loadRepoData()).pipe(
+        return from(repoService.loadRepoData(pageSize)).pipe(
           finalize(()=> setLoading(false))
         )
       }),
       tap(result=> {
-        const data = result.data as {repositories: any}        
+        const data = result.data as RepositoryDataLoad
         if (data && data.repositories) {
-          const dataVal = data as {repositories: {edges?: Array<{node: RepositoryData}>}}
-          const rData = dataVal.repositories?.edges?.map(x=> x.node) as RepositoryData[]
+          const rData = mapFn(data)
           console.log('data', rData)
-          repoService.setRepoData(rData)
+          repoService.setRepoData(rData, data.repositories.totalCount, 
+            data.repositories.pageInfo.endCursor, data.repositories.pageInfo.hasNextPage)
         }
       }),
       takeUntil(destroyed$)
@@ -61,18 +73,38 @@ export const RepositoryList = () => {
   const handleItemPress = (item: RepositoryData)=> {
     navigate(`/details/${item.id}`)
   }
+
+  const handleOnEndReached = async ()=> {
+    if (pageLoading) return
+    if (!fullData.hasNextPage) return
+    console.log('load page ')
+
+    setPageLoading(true)
+    const result = await repoService.loadRepoData(pageSize, true) as {data: RepositoryDataLoad}
+    
+    const data = result.data
+    if (data && data.repositories) {
+      const rData = mapFn(data)
+      console.log('data', rData)
+      repoService.setRepoData([...fullData.repoData, ...rData], data.repositories.totalCount, 
+        data.repositories.pageInfo.endCursor, data.repositories.pageInfo.hasNextPage)
+    }
+    setPageLoading(false)
+  }
   
   
   return (
     <FlatList
       style={{margin: 10}}
-      data={repoData}
+      data={fullData.repoData}
       renderItem={({item})=> <Pressable 
         onPress={()=> handleItemPress(item)}><RepositoryItem {...{item}} />
       </Pressable>}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={item => item.id}
       // other props
+      onEndReached={handleOnEndReached}
+      onEndReachedThreshold={0.5}
     />
   )
 }

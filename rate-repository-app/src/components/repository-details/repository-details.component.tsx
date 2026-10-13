@@ -5,6 +5,7 @@ import { RepositoryData } from "../repository-list/repository-list.data"
 import { RepositoryItem } from "../repository-item/repository-item.component"
 import {  View } from "react-native"
 import { ReviewsList } from "../reviews-list/reviews-list.component"
+import { PageData } from "../repository-list/repository-list.component"
 
 
 export interface Review {id: string, rating: number, text: string, createdAt: string, 
@@ -19,25 +20,41 @@ export interface RepoDetails extends RepositoryData {
 
 interface RepoDetailsData extends RepositoryData {
   url: string
-  reviews?: {edges: Array<{node: Review}>}
+  reviews?: {edges: Array<{node: Review}>}&PageData
 }
 
 const mapDataToVal = (x: RepoDetailsData) => {
   return {...x,reviews: x.reviews?.edges.map(e=> e.node) || []} as RepoDetails
 }
 
+const pageSize = 3
+
 export const RepositoryDetails = ()=> {
   const {repositoryId} = useParams()
-  const { data } = useQuery(getRepo, {variables: {repositoryId}, skip: !repositoryId})
+  const { data, fetchMore} = useQuery(getRepo, {variables: {repositoryId, 
+    first: pageSize, after: ''}, skip: !repositoryId})
+  
+
   
   const dataValData = data as {repository: RepoDetailsData}
   if (!dataValData?.repository) return(<></>)
-
+    
+  const handleLoadMore = ()=> {
+    const hasNext = dataValData.repository?.reviews?.pageInfo?.hasNextPage
+    const cursor = dataValData.repository?.reviews?.pageInfo?.endCursor
+    if (hasNext){
+      fetchMore({variables: {after: cursor}})
+    }
+    
+  }
+  
   const dataVal: RepoDetails = mapDataToVal(dataValData.repository) 
+  console.log('render reviews', dataVal.reviews)
+
   return(
-    <View>
+    <View style={{flex: 1}}>
       <RepositoryItem item={dataVal} showButton={true}/>
-      <ReviewsList reviews={dataVal.reviews}/>
+      <ReviewsList reviews={dataVal.reviews} loadMoreFn={handleLoadMore}/>
     </View>
 
   )

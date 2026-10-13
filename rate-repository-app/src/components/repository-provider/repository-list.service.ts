@@ -13,6 +13,8 @@ interface QueryArgs {
   orderDirection?: OrderDirection
   orderBy?: OrderBy
   searchKeyword?: string
+  first?: number,
+  after?: string
 }
 
 export const ordering: Record<OrderType, 
@@ -30,19 +32,25 @@ export interface FilterState {
 
 export interface RepoState extends FilterState {
   repoData: RepositoryData[]
+  totalCount: number
+  cursor: string
+  hasNextPage: boolean
 }
 
 export interface RepoStore extends RepoState {
   setOrderType: (x: OrderType)=> void
-  setRepoData: (x: RepositoryData[])=>void
+  setRepoData: (x: RepositoryData[], y: number, c: string, hnp: boolean)=>void
   setSearch: (x: string)=>void
 }
 
 export const defaultRepoState: RepoState = {
   orderType: '',
   search: '',
-  repoData: repositories
-  
+
+  repoData: repositories,
+  totalCount: repositories.length,
+  cursor: '',
+  hasNextPage: false
 }
 
 export class RepositoryListService {
@@ -69,15 +77,17 @@ export class RepositoryListService {
         orderType: defaultRepoState.orderType,
         search: defaultRepoState.search,
         repoData: defaultRepoState.repoData,
+        totalCount: defaultRepoState.totalCount,
+        cursor: defaultRepoState.cursor,
 
         setOrderType: (x: OrderType)=> {
           set(()=> {
             return {orderType: x}
           })
         },
-        setRepoData: (x: RepositoryData[])=> {
+        setRepoData: (x: RepositoryData[], y: number, c: string, hnp: boolean)=> {
           set(()=> {
-            return {repoData: x}
+            return {repoData: x, totalCount: y, cursor: c, hasNextPage: hnp}
           })
         },
         setSearch: (x: string)=> set(()=> ({search: x}))
@@ -97,11 +107,11 @@ export class RepositoryListService {
     this.search$.next(search)
   }
   
-  setRepoData(repoData: RepositoryData[]) {
-    this.useStore.getState().setRepoData(repoData)
+  setRepoData(repoData: RepositoryData[], totalCount: number, cursor = '', hasNextPage= false) {
+    this.useStore.getState().setRepoData(repoData, totalCount, cursor, hasNextPage)
   }
   
-  getVariables() {
+  getVariables(pageSize?: number, more?: boolean) {
     const vars: QueryArgs = {}
     const orderType = this.useStore.getState().orderType
     
@@ -111,14 +121,25 @@ export class RepositoryListService {
     if (search) {
       vars.searchKeyword=search
     }
+    if (pageSize) {
+      vars.first = pageSize
+    }
+    
+    const cursor = this.useStore.getState().cursor
+    if (more && cursor) {
+      vars.after = cursor
+    }
+
+    
+    
     
     return vars
   }
 
-  async loadRepoData() {
+  async loadRepoData(pageSize?: number, more= false) {
     const rData = await apolloClient.query({
       query: getRepositories,
-      variables: this.getVariables()
+      variables: this.getVariables(pageSize, more)
     })
     return rData
   }

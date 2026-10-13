@@ -2,9 +2,15 @@ import { gql  } from "@apollo/client"
 
 export const getRepositories = gql`
 query getRepositories($orderDirection: OrderDirection, 
-$orderBy: AllRepositoriesOrderBy, $searchKeyword: String) {
+$orderBy: AllRepositoriesOrderBy, $searchKeyword: String, 
+$first: Int, $after: String) {
   repositories(orderDirection: $orderDirection, orderBy: $orderBy, 
-  searchKeyword: $searchKeyword) {
+  searchKeyword: $searchKeyword, first: $first, after: $after) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
     edges {
       node {
         id
@@ -22,7 +28,7 @@ $orderBy: AllRepositoriesOrderBy, $searchKeyword: String) {
 }`
 
 export const getRepo = gql`
-query getRepo($repositoryId: ID!) {
+query getRepo($repositoryId: ID!, $first: Int, $after: String) {
   repository(id: $repositoryId) {
     id
     ownerName
@@ -40,7 +46,11 @@ query getRepo($repositoryId: ID!) {
     description
     language
     userHasReviewed
-    reviews {
+    reviews(first: $first, after: $after) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
       edges {
         node {
           id
